@@ -2,14 +2,15 @@ export const styles = `
     .widget__container * {
         box-sizing: border-box;
     }        
-    h3, p, input {
+    * {
         margin: 0;
         padding: 0;
     }
     .widget__container {
         box-shadow: 0 0 18px 8px rgba(0, 0, 0, 0.1), 0 0 32px 32px rgba(0, 0, 0, 0.08);
-        width: 400px;
-        overflow: auto;
+        width: 300px;
+        min-height: 500px;
+        overflow: hidden;
         right: -25px;
         bottom: 75px;
         position: absolute;
@@ -18,6 +19,8 @@ export const styles = `
         background-color: #e6e6e6a6;
         border-radius: 10px;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
     }
     .widget__icon {
         cursor: pointer;
@@ -42,55 +45,54 @@ export const styles = `
         max-height: 0px;
     }
     .widget__header {
-        padding: 1rem 2rem 1.5rem;
+        padding: 1rem;
         background-color: #000;
         color: #fff;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        text-align: center;
     }
-    .widget__header h3 {
+    .widget__header h1 {
         font-size: 24px;
         font-weight: 400;
-        margin-bottom: 8px;
     }
-    form {
-        padding: 2rem 1rem 1.5rem;
+    .widget__messages {
+        padding: 1rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
     }
-    form .form__field {
-        margin-bottom: 1.5rem;
+    .widget__messages .question {
+        background-color: rgb(147 197 253);
+        padding: 0.5rem;
+        border-radius: 25px;
+        border-bottom-right-radius: 0px;
+        margin-left: auto;
+    }
+    .widget__messages .answer {
+        background-color: rgb(209 213 219);
+        padding: 0.5rem;
+        border-radius: 15px;
+        border-bottom-left-radius: 0px;
+        margin-right: auto;
+    }
+    .widget__form {
         display: flex;
         flex-direction: column;
     }
-    .form__field label {
-        margin-bottom: 8px;
-        font-size: 14px;
+    .widget__form input {
+        border: none;
+        outline: none;
+        padding: 1rem;
+        border-top: 1px solid #000;
     }
-    .form__field input,
-    .form__field textarea {
-        border: 1px solid #000000ad;
-        border-radius: 3px;
-        padding: 8px 10px;
-        background-color: #fff;
-    }
-    .form__field input {
-        height: 48px;
-    }
-    .form__field textarea::placeholder {
-        font-family: Helvetica, Arial ,sans-serif;
-    }
-    form button {
-        height: 48px;
-        border-radius: 6px;
-        font-size: 18px;
+    .widget__form button {
+        border: none;
+        outline: none;
+        padding: 0.5rem;
         background-color: #000;
         color: #fff;
-        border: 0;
-        width: 100%;
         cursor: pointer;
-    }
-    form button:hover {
-        background-color: rgba(0, 0, 0, 95%);
     }
 `;
 

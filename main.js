@@ -1,15 +1,32 @@
 import { CLOSE_ICON, MESSAGE_ICON, styles } from "./assets.js";
 
 class MessageWidget {
-  constructor(position = "bottom-right") {
+  constructor(userId, botId, position = "bottom-right") {
+    this.userId = userId;
+    this.botId = botId;
     this.position = this.getPosition(position);
-    this.open = false;
+    this.open = true;
     this.initialize();
     this.injectStyles();
+    this.answerDiv = null;
+    this.idx = -1;
+    this.socket = io("http://localhost:8080");
+    this.socket.on("connect", () => {
+      console.log("connected");
+      this.socket.emit("bot_create", { user_id: userId, bot_id: botId });
+
+      this.socket.on("bot_ready", (data) => {
+        console.log("Bot ready:", data.state, data.message);
+      });
+      this.socket.on("bot_answer", (data) => {
+        if (data.done) return;
+        this.answerDiv.innerText += data.answer;
+      });
+    });
   }
 
   position = "";
-  open = false;
+  open = true;
   widgetContainer = null;
 
   getPosition(position) {
@@ -64,7 +81,7 @@ class MessageWidget {
      * Create a container for the widget and add the following classes:- `widget__hidden`, `widget__container`
      */
     this.widgetContainer = document.createElement("div");
-    this.widgetContainer.classList.add("widget__hidden", "widget__container");
+    this.widgetContainer.classList.add("widget__container"); // TODO: "widget__hidden", 
 
     /**
      * Invoke the `createWidget()` method
@@ -80,50 +97,41 @@ class MessageWidget {
 
   createWidgetContent() {
     this.widgetContainer.innerHTML = `
-        <header class="widget__header">
-            <h3>Start a conversation</h3>
-            <p>We usually respond within a few hours</p>
-        </header>
-        <form>
-            <div class="form__field">
-                <label for="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Enter your name"
-                />
-            </div>
-            <div class="form__field">
-                <label for="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Enter your email"
-                />
-            </div>
-            <div class="form__field">
-                <label for="subject">Subject</label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  placeholder="Enter Message Subject"
-                />
-            </div>
-            <div class="form__field">
-                <label for="message">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  placeholder="Enter your message"
-                  rows="6"
-                ></textarea>
-            </div>
-            <button>Send Message</button>
-        </form>
+      <div class="widget__header">
+        <h1>Boon</h1>
+      </div>
     `;
+
+    const messagesContainer = document.createElement("div");
+    messagesContainer.classList.add("widget__messages");
+    this.widgetContainer.appendChild(messagesContainer);
+
+    const form = document.createElement("form");
+    form.classList.add("widget__form");
+    const messageInput = document.createElement("input");
+    messageInput.placeholder = "Type a message...";
+    const submitButton = document.createElement("button");
+    submitButton.innerHTML = "Send";
+    submitButton.type = "submit";
+    form.appendChild(messageInput);
+    form.appendChild(submitButton);
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      this.idx += 1
+      const question = messageInput.value;
+      const questionDiv = document.createElement("div");
+      questionDiv.classList.add("question");
+      questionDiv.innerHTML = question;
+      messagesContainer.appendChild(questionDiv);
+      messageInput.value = "";
+
+      this.answerDiv = document.createElement("div");
+      this.answerDiv.classList.add("answer");
+      messagesContainer.appendChild(this.answerDiv);
+
+      this.socket.emit("bot_ask", { idx: this.idx, user_id: this.userId, bot_id: this.botId, question });
+    }
+    this.widgetContainer.appendChild(form);
   }
 
   injectStyles() {
@@ -147,8 +155,4 @@ class MessageWidget {
   }
 }
 
-function initializeWidget() {
-  return new MessageWidget();
-}
-
-initializeWidget();
+new MessageWidget("Aw98q0YjmJQbVfX6FuDTfQM00oI3", "NLydvsiMmKPzS3gU1J9v")
