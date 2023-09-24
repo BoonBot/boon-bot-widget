@@ -1,6 +1,6 @@
 import { CLOSE_ICON, MESSAGE_ICON, styles } from "./assets.js";
 
-class MessageWidget {
+export default class MessageWidget {
   constructor(userId, botId, position = "bottom-right") {
     this.userId = userId;
     this.botId = botId;
@@ -155,4 +155,4 @@ class MessageWidget {
   }
 }
 
-new MessageWidget(document.currentScript.getAttribute('userId') || "Aw98q0YjmJQbVfX6FuDTfQM00oI3", document.currentScript.getAttribute('botId') || "NLydvsiMmKPzS3gU1J9v")
+// new MessageWidget(document.currentScript.getAttribute('userId') || "Aw98q0YjmJQbVfX6FuDTfQM00oI3", document.currentScript.getAttribute('botId') || "NLydvsiMmKPzS3gU1J9v")
