@@ -154,5 +154,3 @@ export default class MessageWidget {
     }
   }
 }
-
-// new MessageWidget(document.currentScript.getAttribute('userId') || "Aw98q0YjmJQbVfX6FuDTfQM00oI3", document.currentScript.getAttribute('botId') || "NLydvsiMmKPzS3gU1J9v")
