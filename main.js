@@ -11,7 +11,7 @@ export default class BotClient {
     this.injectStyles();
     this.answerDiv = null;
     this.idx = -1;
-    this.socket = io("http://localhost:8080");
+    this.socket = io("https://api.boonbot.com");
     this.socket.on("connect", () => {
       console.log("connected");
       this.socket.emit("bot_create", { user_id: userId, bot_id: botId });
