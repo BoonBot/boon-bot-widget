@@ -155,4 +155,4 @@ class MessageWidget {
   }
 }
 
-// new MessageWidget("Aw98q0YjmJQbVfX6FuDTfQM00oI3", "NLydvsiMmKPzS3gU1J9v")
+new MessageWidget(document.currentScript.getAttribute('userId') || "Aw98q0YjmJQbVfX6FuDTfQM00oI3", document.currentScript.getAttribute('botId') || "NLydvsiMmKPzS3gU1J9v")
