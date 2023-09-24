@@ -1,6 +1,7 @@
 import { CLOSE_ICON, MESSAGE_ICON, styles } from "./assets.js";
+import "https://cdn.socket.io/4.6.0/socket.io.min.js";
 
-export default class MessageWidget {
+export default class BotClient {
   constructor(userId, botId, position = "bottom-right") {
     this.userId = userId;
     this.botId = botId;
