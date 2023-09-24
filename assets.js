@@ -21,7 +21,6 @@ export const styles = `
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        z-index: 999
     }
     .widget__icon {
         cursor: pointer;
@@ -30,7 +29,6 @@ export const styles = `
         top: 18px;
         left: 16px;
         transition: transform .3s ease;
-        z-index: 999;
     }
     .widget__hidden {
         transform: scale(0);
